@@ -1,14 +1,19 @@
 #include <Adafruit_Fingerprint.h>
 #include <ArduinoJson.h>
+#include <SPI.h>
+#include <MFRC522.h>
+// For RFID
+#define SDA_DIO 9
+#define RESET_DIO 8
+
+MFRC522 rfid(SDA_DIO, RESET_DIO); // Create MFRC522 instance
 
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&Serial3);
 StaticJsonDocument<64> jsonDoc; // Json Document for transmitting JSON Data to Serial Comm. Devices
 
-String inputString = "";        // String to hold incoming serial data
-boolean stringComplete = false; // Flag to indicate if a complete string is received
-
 boolean fingerPrintConnected = false;
 uint16_t id;
+String cardUID = ""; // String to store the card's UID
 
 void sendJsonResponse(const char *action, const char *message, uint16_t id = UINT16_MAX)
 {
@@ -19,6 +24,21 @@ void sendJsonResponse(const char *action, const char *message, uint16_t id = UIN
   if (id >= 0 && id != UINT16_MAX)
   {
     jsonDoc["id"] = id;
+  }
+
+  serializeJson(jsonDoc, Serial);
+  Serial.println();
+}
+
+void sendJsonResponseCard(const char *action, const char *message, String cardId = "")
+{
+  StaticJsonDocument<64> jsonDoc;
+  jsonDoc["action"] = action;
+  jsonDoc["message"] = message;
+
+  if (cardId != "")
+  {
+    jsonDoc["id"] = cardId;
   }
 
   serializeJson(jsonDoc, Serial);
@@ -368,14 +388,29 @@ uint16_t verifyFinger()
   return 200;
 }
 
-void registerRfidCard()
+String getUID(byte *uid)
 {
-  //
+  String uidStr = "";
+  for (byte i = 0; i < rfid.uid.size; i++)
+  {
+    uidStr += (uid[i] < 0x10 ? "0" : ""); // Add leading zero if needed
+    uidStr += String(uid[i], HEX);        // Convert byte to hexadecimal and add to the string
+  }
+  return uidStr;
 }
 
 void readRfidCard()
 {
-  //
+  while (1)
+  {
+    sendJsonResponseCard("rfid", "Scan Book");
+    if (rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial())
+    {
+      cardUID = getUID(rfid.uid.uidByte); // Store the UID in the cardUID variable
+      sendJsonResponseCard("rfid", "Card Read", cardUID);
+      break;
+    }
+  }
 }
 
 void switchString(String command)
@@ -421,16 +456,10 @@ void switchString(String command)
       sendJsonResponse("search", "verification Failed");
     }
   }
-  else if (command == "register")
-  {
-    // Handle the "register" command
-    sendJsonResponse("message", "Register command received");
-    // Add your code for handling "register" here
-  }
   else if (command == "read")
   {
     // Handle the "read" command
-    sendJsonResponse("message", "Read command received");
+    readRfidCard();
     // Add your code for handling "read" here
   }
   else
@@ -489,6 +518,9 @@ void setup()
     ; // For Yun/Leo/Micro/Zero/...
   delay(100);
   finger.begin(57600);
+
+  SPI.begin();     // Initialize SPI bus
+  rfid.PCD_Init(); // Initialize MFRC522
 
   checkFingerPrintConnection();
 }
