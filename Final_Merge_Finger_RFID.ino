@@ -57,19 +57,19 @@ uint16_t enrollFinger()
     switch (p)
     {
     case FINGERPRINT_OK:
-      sendJsonResponse("enroll", "Image taken");
+      sendJsonResponse("enroll", "Image Taken");
       break;
     case FINGERPRINT_NOFINGER:
-      sendJsonResponse("enroll", "Place finger");
+      sendJsonResponse("enroll", "Place Finger");
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
-      sendJsonResponse("enroll", "Communication error");
+      sendJsonResponse("enroll", "Communication Error");
       break;
     case FINGERPRINT_IMAGEFAIL:
-      sendJsonResponse("enroll", "Imaging error");
+      sendJsonResponse("enroll", "Imaging Error");
       break;
     default:
-      sendJsonResponse("enroll", "Unknown error");
+      sendJsonResponse("enroll", "Unknown Error");
       break;
     }
   }
@@ -78,13 +78,13 @@ uint16_t enrollFinger()
   switch (p)
   {
   case FINGERPRINT_OK:
-    sendJsonResponse("enroll", "Image converted");
+    sendJsonResponse("enroll", "Image Converted");
     break;
   case FINGERPRINT_IMAGEMESS:
     sendJsonResponse("enroll", "Image too messy");
     return p;
   case FINGERPRINT_PACKETRECIEVEERR:
-    sendJsonResponse("enroll", "Communication error");
+    sendJsonResponse("enroll", "Communication Error");
     return p;
   case FINGERPRINT_FEATUREFAIL:
     sendJsonResponse("enroll", "Could not find fingerprint features");
@@ -93,11 +93,11 @@ uint16_t enrollFinger()
     sendJsonResponse("enroll", "Could not find fingerprint features");
     return p;
   default:
-    sendJsonResponse("enroll", "Unknown error");
+    sendJsonResponse("enroll", "Unknown Error");
     return p;
   }
 
-  sendJsonResponse("enroll", "Remove finger");
+  sendJsonResponse("enroll", "Remove Finger");
   delay(2000);
   p = 0;
 
@@ -116,20 +116,20 @@ uint16_t enrollFinger()
     switch (p)
     {
     case FINGERPRINT_OK:
-      sendJsonResponse("enroll", "Image taken");
+      sendJsonResponse("enroll", "Image Taken");
       break;
     case FINGERPRINT_NOFINGER:
       sendJsonResponse("enroll", "Place finger again");
       continue;
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
-      sendJsonResponse("enroll", "Communication error");
+      sendJsonResponse("enroll", "Communication Error");
       break;
     case FINGERPRINT_IMAGEFAIL:
-      sendJsonResponse("enroll", "Imaging error");
+      sendJsonResponse("enroll", "Imaging Error");
       break;
     default:
-      sendJsonResponse("enroll", "Unknown error");
+      sendJsonResponse("enroll", "Unknown Error");
       break;
     }
   }
@@ -138,13 +138,13 @@ uint16_t enrollFinger()
   switch (p)
   {
   case FINGERPRINT_OK:
-    sendJsonResponse("enroll", "Image converted");
+    sendJsonResponse("enroll", "Image Converted");
     break;
   case FINGERPRINT_IMAGEMESS:
     sendJsonResponse("enroll", "Image too messy");
     return p;
   case FINGERPRINT_PACKETRECIEVEERR:
-    sendJsonResponse("enroll", "Communication error");
+    sendJsonResponse("enroll", "Communication Error");
     return p;
   case FINGERPRINT_FEATUREFAIL:
     sendJsonResponse("enroll", "Could not find fingerprint features");
@@ -153,7 +153,7 @@ uint16_t enrollFinger()
     sendJsonResponse("enroll", "Could not find fingerprint features");
     return p;
   default:
-    sendJsonResponse("enroll", "Unknown error");
+    sendJsonResponse("enroll", "Unknown Error");
     return p;
   }
 
@@ -162,11 +162,11 @@ uint16_t enrollFinger()
 
   if (p == FINGERPRINT_OK)
   {
-    sendJsonResponse("enroll", "Prints matched!");
+    sendJsonResponse("enroll", "Prints Matched!");
   }
   else if (p == FINGERPRINT_PACKETRECIEVEERR)
   {
-    sendJsonResponse("enroll", "Communication error");
+    sendJsonResponse("enroll", "Communication Error");
     return p;
   }
   else if (p == FINGERPRINT_ENROLLMISMATCH)
@@ -176,7 +176,7 @@ uint16_t enrollFinger()
   }
   else
   {
-    sendJsonResponse("enroll", "Unknown error");
+    sendJsonResponse("enroll", "Unknown Error");
     return p;
   }
 
@@ -190,7 +190,7 @@ uint16_t enrollFinger()
   }
   else if (p == FINGERPRINT_PACKETRECIEVEERR)
   {
-    sendJsonResponse("enroll", "Communication error");
+    sendJsonResponse("enroll", "Communication Error");
     return p;
   }
   else if (p == FINGERPRINT_BADLOCATION)
@@ -205,7 +205,7 @@ uint16_t enrollFinger()
   }
   else
   {
-    sendJsonResponse("enroll", "Unknown error");
+    sendJsonResponse("enroll", "Unknown Error");
     return p;
   }
 
@@ -221,20 +221,20 @@ uint16_t findFingerUser()
     switch (p)
     {
     case FINGERPRINT_OK:
-      sendJsonResponse("verify", "Image taken");
+      sendJsonResponse("search", "Image Taken");
       break;
     case FINGERPRINT_NOFINGER:
-      sendJsonResponse("verify", "No finger detected");
+      sendJsonResponse("search", "No finger detected");
       continue;
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
-      sendJsonResponse("verify", "Communication error");
+      sendJsonResponse("search", "Communication Error");
       return p;
     case FINGERPRINT_IMAGEFAIL:
-      sendJsonResponse("verify", "Imaging error");
+      sendJsonResponse("search", "Imaging Error");
       return p;
     default:
-      sendJsonResponse("verify", "Unknown error");
+      sendJsonResponse("search", "Unknown Error");
       return p;
     }
   }
@@ -245,22 +245,22 @@ uint16_t findFingerUser()
   switch (p)
   {
   case FINGERPRINT_OK:
-    sendJsonResponse("verify", "Image converted");
+    sendJsonResponse("search", "Image Converted");
     break;
   case FINGERPRINT_IMAGEMESS:
-    sendJsonResponse("verify", "Image too messy");
+    sendJsonResponse("search", "Image too messy");
     return p;
   case FINGERPRINT_PACKETRECIEVEERR:
-    sendJsonResponse("verify", "Communication error");
+    sendJsonResponse("search", "Communication Error");
     return p;
   case FINGERPRINT_FEATUREFAIL:
-    sendJsonResponse("verify", "Could not find fingerprint features");
+    sendJsonResponse("search", "Could not find fingerprint features");
     return p;
   case FINGERPRINT_INVALIDIMAGE:
-    sendJsonResponse("verify", "Could not find fingerprint features");
+    sendJsonResponse("search", "Could not find fingerprint features");
     return p;
   default:
-    sendJsonResponse("verify", "Unknown error");
+    sendJsonResponse("search", "Unknown Error");
     return p;
   }
 
@@ -268,34 +268,34 @@ uint16_t findFingerUser()
   p = finger.fingerSearch();
   if (p == FINGERPRINT_OK)
   {
-    if (finger.fingerID)
+    if (finger.fingerID > 0)
     {
-      sendJsonResponse("verify", "Found a print match!");
+      sendJsonResponse("search", "Found a print match!");
     }
     else
     {
-      sendJsonResponse("verify", "Did not find a match");
+      sendJsonResponse("search", "Did not find a match");
       return FINGERPRINT_NOTFOUND;
     }
   }
   else if (p == FINGERPRINT_PACKETRECIEVEERR)
   {
-    sendJsonResponse("verify", "Communication error");
+    sendJsonResponse("search", "Communication Error");
     return p;
   }
   else if (p == FINGERPRINT_NOTFOUND)
   {
-    sendJsonResponse("verify", "Did not find a match");
+    sendJsonResponse("search", "Did not find a match");
     return p;
   }
   else
   {
-    sendJsonResponse("verify", "Unknown error");
+    sendJsonResponse("search", "Unknown Error");
     return p;
   }
 
   // found a match!
-  sendJsonResponse("verify", "Fingerprint Matched");
+  sendJsonResponse("search", "Fingerprint Matched", finger.fingerID);
 
   return 200;
 }
@@ -309,20 +309,20 @@ uint16_t verifyFinger()
     switch (p)
     {
     case FINGERPRINT_OK:
-      sendJsonResponse("verify", "Image taken");
+      sendJsonResponse("verify", "Image Taken");
       break;
     case FINGERPRINT_NOFINGER:
       sendJsonResponse("verify", "No finger detected");
       continue;
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
-      sendJsonResponse("verify", "Communication error");
+      sendJsonResponse("verify", "Communication Error");
       return p;
     case FINGERPRINT_IMAGEFAIL:
-      sendJsonResponse("verify", "Imaging error");
+      sendJsonResponse("verify", "Imaging Error");
       return p;
     default:
-      sendJsonResponse("verify", "Unknown error");
+      sendJsonResponse("verify", "Unknown Error");
       return p;
     }
   }
@@ -348,7 +348,7 @@ uint16_t verifyFinger()
     sendJsonResponse("verify", "Could not find fingerprint features");
     return p;
   default:
-    sendJsonResponse("verify", "Unknown error");
+    sendJsonResponse("verify", "Unknown Error");
     return p;
   }
 
@@ -368,7 +368,7 @@ uint16_t verifyFinger()
   }
   else if (p == FINGERPRINT_PACKETRECIEVEERR)
   {
-    sendJsonResponse("verify", "Communication error");
+    sendJsonResponse("verify", "Communication Error");
     return p;
   }
   else if (p == FINGERPRINT_NOTFOUND)
@@ -383,8 +383,7 @@ uint16_t verifyFinger()
   }
 
   // found a match!
-  sendJsonResponse("verify", "Fingerprint Matched");
-
+  sendJsonResponse("verify", "Fingerprint Matched", finger.fingerID);
   return 200;
 }
 
@@ -415,14 +414,13 @@ void readRfidCard()
 
 void switchString(String command)
 {
-
   if (command == "enroll")
   {
     // Handle the "enroll" command
     uint16_t response = enrollFinger();
     if (response == 200)
     {
-      sendJsonResponse("enroll", "Enrollment Successful", finger.fingerID);
+      sendJsonResponse("enroll", "Enrollment Successful");
     }
     else
     {
@@ -435,7 +433,7 @@ void switchString(String command)
     uint16_t response = verifyFinger();
     if (response == 200)
     {
-      sendJsonResponse("verify", "Fingerprint matched", finger.fingerID);
+      sendJsonResponse("verify", "Fingerprint Matched", finger.fingerID);
     }
     else
     {
@@ -449,11 +447,11 @@ void switchString(String command)
 
     if (response == 200)
     {
-      sendJsonResponse("search", "Fingerprint matched", finger.fingerID);
+      sendJsonResponse("search", "Fingerprint Matched", finger.fingerID);
     }
     else
     {
-      sendJsonResponse("search", "verification Failed");
+      sendJsonResponse("search", "Verification Failed");
     }
   }
   else if (command == "read")
